@@ -37,7 +37,7 @@ namespace TabuSearch {
 		int attempts = 0;
 		int failures = 0;
 
-		Tabu(int maxSize, int maxDiff);
+		Tabu(int maxSize, int maxDiff = 0);
 
 		void insert(std::vector<int> &element, long long generation);
 		bool isUnique(std::vector<int> &element);
