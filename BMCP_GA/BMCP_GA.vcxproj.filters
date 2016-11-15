@@ -27,9 +27,6 @@
     <ClCompile Include="Fitness.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Selection.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StopCondition.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -37,6 +34,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Restore.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Selection.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Drain.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Flow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SimulatedAnnealing.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -53,9 +62,6 @@
     <ClInclude Include="Fitness.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Selection.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="StopCondition.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -63,6 +69,21 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Restore.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Selection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Drain.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Flow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SimulatedAnnealing.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Random.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

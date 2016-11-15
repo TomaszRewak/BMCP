@@ -74,6 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -90,6 +91,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -111,17 +113,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="GeneticAlgorithm.h" />
-    <ClInclude Include="Builder.h" />
     <ClInclude Include="InitialPopulation.h" />
-    <ClInclude Include="Selection.h" />
     <ClInclude Include="StopCondition.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GeneticAlgorithm.cpp" />
-    <ClCompile Include="Builder.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Component.h" />
-    <ClCompile Include="Selection.cpp" />
     <ClCompile Include="Specimen.cpp" />
     <ClCompile Include="Specimen.h" />
     <ClCompile Include="StopCondition.cpp" />

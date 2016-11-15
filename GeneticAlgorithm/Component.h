@@ -10,36 +10,42 @@
 
 #include <vector>
 #include <memory>
+#include <functional>
 
 namespace GA
 {
 	class GeneticAlgorithm;
 	class Component;
 
-	class ComponentChain
-	{
-	private:
-		std::vector<std::shared_ptr<Component>>::reverse_iterator current;
-		std::vector<std::shared_ptr<Component>>::reverse_iterator last;
-
-	public:
-		GeneticAlgorithm &ga;
-
-		ComponentChain(
-			GeneticAlgorithm& ga,
-			std::vector<std::shared_ptr<Component>>::reverse_iterator current,
-			std::vector<std::shared_ptr<Component>>::reverse_iterator last);
-
-		Specimen get();
-		ComponentChain skip(int by);
-	};
-
 	class Component
 	{
 	public:
-		virtual void reset(GA::GeneticAlgorithm& ga);
-		virtual void prepare(GA::GeneticAlgorithm& ga);
-		virtual Specimen get(ComponentChain componentChain) = 0;
-		virtual void log(GeneticAlgorithm& ga);
+		std::shared_ptr<Component> chain;
+
+		virtual Specimen get(GeneticAlgorithm& ga) = 0;
+	};
+
+	class ComponentChainBuilder
+	{
+	private:
+		ComponentChainBuilder& with(std::shared_ptr<Component> component);
+
+	public:
+		std::shared_ptr<Component> chain;
+		ComponentChainBuilder(std::shared_ptr<Component> chain = nullptr);
+
+		template<typename T, typename... Args>
+		ComponentChainBuilder& with(Args&&... args) { return with(std::make_shared<T>(std::forward<Args>(args)...)); }
+	};
+
+	class InlineComponent : public Component
+	{
+	private:
+		std::function<Specimen(GeneticAlgorithm& ga)> inlineFunction;
+
+	public:
+		InlineComponent(std::function<Specimen(GeneticAlgorithm& ga)> inlineFunction);
+
+		virtual Specimen get(GeneticAlgorithm& ga) override;
 	};
 }

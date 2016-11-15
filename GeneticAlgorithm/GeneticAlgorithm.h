@@ -7,10 +7,10 @@
 #pragma once
 
 #include <map>
+#include <functional>
 
 #include "Component.h"
 #include "Specimen.h"
-#include "Selection.h"
 #include "Fitness.h"
 #include "StopCondition.h"
 #include "InitialPopulation.h"
@@ -22,7 +22,7 @@ namespace GA
 	private:
 		std::shared_ptr<InitialPopulation> initialPopulation;
 		std::vector<std::shared_ptr<StopCondition>> stopConditions;
-		std::vector<std::shared_ptr<Component>> components;
+		std::vector<std::function<void(ComponentChainBuilder& builder)>> chainGenerators;
 
 		int generation = 0;
 		
@@ -39,16 +39,14 @@ namespace GA
 #pragma region Initialization
 
 	public:
-		GeneticAlgorithm withInitialPopulation(std::shared_ptr<InitialPopulation> initlaPopulation);
-		GeneticAlgorithm withStopCondition(std::shared_ptr<StopCondition> stopCondition);
-		GeneticAlgorithm with(std::shared_ptr<Component> component);
+		GeneticAlgorithm& withInitialPopulation(std::shared_ptr<InitialPopulation> initlaPopulation);
+		GeneticAlgorithm& withStopCondition(std::shared_ptr<StopCondition> stopCondition);
+		GeneticAlgorithm& with(std::function<void(ComponentChainBuilder& builder)> chain);
 
 		template<typename T, typename... Args>
-		GeneticAlgorithm withInitialPopulation(Args&&... args) { return withInitialPopulation(std::make_shared<T>(std::forward<Args>(args)...)); }
+		GeneticAlgorithm& withInitialPopulation(Args&&... args) { return withInitialPopulation(std::make_shared<T>(std::forward<Args>(args)...)); }
 		template<typename T, typename... Args>
-		GeneticAlgorithm withStopCondition(Args&&... args) { return withStopCondition(std::make_shared<T>(std::forward<Args>(args)...)); }
-		template<typename T, typename... Args>
-		GeneticAlgorithm with(Args&&... args) { return with(std::make_shared<T>(std::forward<Args>(args)...)); }
+		GeneticAlgorithm& withStopCondition(Args&&... args) { return withStopCondition(std::make_shared<T>(std::forward<Args>(args)...)); }
 	};
 
 #pragma endregion

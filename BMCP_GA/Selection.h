@@ -6,41 +6,37 @@
 
 #pragma once
 
-#include "GeneticAlgorithm\GeneticAlgorithm.h"
-#include "GeneticAlgorithm\Component.h"
+#include "Random.h"
+#include "GeneticAlgorithm/GeneticAlgorithm.h"
+#include "GeneticAlgorithm/Component.h"
 
 namespace BMCP_GA
 {
 	class RingSelection : public GA::Component
 	{
 	private:
-		double ringSize;
-
-	public:
-		RingSelection(double ringSize);
-
-		virtual GA::Specimen get(GA::ComponentChain componentChain);
-	};
-
-	class RingMiddleSelection : public GA::Component
-	{
-	private:
 		int ringSize;
 
-	public:
-		RingMiddleSelection(int ringSize);
+		Random random;
 
-		virtual GA::Specimen get(GA::ComponentChain componentChain);
+	public:
+		RingSelection(int ringSize);
+
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};
 
 	class SingleSelection : public GA::Component
 	{
 	private:
-		double ringSize;
+		Random random;
 
 	public:
-		SingleSelection();
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
+	};
 
-		virtual GA::Specimen get(GA::ComponentChain componentChain);
+	class BestSelection : public GA::Component
+	{
+	public:
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};
 }

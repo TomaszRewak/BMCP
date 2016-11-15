@@ -20,6 +20,6 @@ namespace BMCP_GA
 	public:
 		Fitness(BMCP::Graph& graph);
 
-		virtual GA::Specimen get(GA::ComponentChain componentChain);
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};
 }

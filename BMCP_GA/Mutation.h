@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include <random>
-
+#include "Random.h"
 #include "GeneticAlgorithm\Component.h"
 
 namespace BMCP_GA
@@ -17,12 +16,11 @@ namespace BMCP_GA
 	private:
 		double probability;
 
-		std::default_random_engine generator;
-		std::uniform_real_distribution<double> distribution;
+		Random random;
 
 	public:
 		Mutation(double propability);
 
-		virtual GA::Specimen get(GA::ComponentChain componentChain);
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};
 }

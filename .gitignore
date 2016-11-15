@@ -8,3 +8,12 @@ Release/
 GeneticAlgorithm/Debug/
 BMCP/Debug/
 BMCP_GA/Debug/
+/ipch/AutoPCH
+/Out/GEOM60 258.color
+/Out/GEOM120a 546.color
+/Out/GEOM120a 544.color
+/Out/fitness_global GEOM60 0 258.out
+/Out/fitness GEOM120a 0 546.out
+/Out/fitness GEOM120a 0 544.out
+/Out/GEOM60a 353.color
+/Out/fitness_global GEOM60a 0 353.out

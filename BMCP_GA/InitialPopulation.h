@@ -25,6 +25,6 @@ namespace BMCP_GA
 	public:
 		InitialPopulation(BMCP::Graph& graph, size_t size);
 
-		virtual std::vector<GA::Specimen> generate();
+		virtual std::vector<GA::Specimen> generate() override;
 	};
 }

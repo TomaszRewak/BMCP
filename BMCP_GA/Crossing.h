@@ -6,8 +6,7 @@
 
 #pragma once
 
-#include <random>
-
+#include "Random.h"
 #include "GeneticAlgorithm\Component.h"
 #include "BMCP\Graph.h"
 
@@ -19,12 +18,11 @@ namespace BMCP_GA
 		BMCP::Graph& graph;
 		double probability;
 
-		std::default_random_engine generator;
-		std::uniform_real_distribution<double> distribution;
+		Random random;
 
 	public:
 		Crossing(BMCP::Graph& graph, double propability);
 
-		virtual GA::Specimen get(GA::ComponentChain componentChain);
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};
 }

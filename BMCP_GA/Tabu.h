@@ -32,8 +32,6 @@ namespace BMCP_GA
 	public:
 		Tabu(int tabuSize, double targetDenial, int attempts, BMCP::Graph& graph);
 
-		virtual void prepare(GA::GeneticAlgorithm& ga);
-		virtual GA::Specimen get(GA::ComponentChain componentChain);
-		virtual void log(GA::GeneticAlgorithm& ga);
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga);
 	};
 }

@@ -14,22 +14,17 @@ namespace BMCP_GA
 		afterGeneration(afterGeneration)
 	{ }
 
-	void Restore::prepare(GA::GeneticAlgorithm& geneticAlgorithm)
+	GA::Specimen Restore::get(GA::GeneticAlgorithm& ga)
 	{
-		lastGeneration = 0;
-	}
+		auto specimen = chain->get(ga);
 
-	GA::Specimen Restore::get(GA::ComponentChain componentChain)
-	{
-		auto specimen = componentChain.get();
+		if (specimen.fitness <= ga.globalBest.fitness)
+			lastGeneration = ga.currentGeneration();
 
-		if (specimen.fitness <= componentChain.ga.globalBest.fitness)
-			lastGeneration = componentChain.ga.currentGeneration();
-
-		if (lastGeneration < componentChain.ga.currentGeneration() - afterGeneration)
+		if (lastGeneration < ga.currentGeneration() - afterGeneration)
 		{
-			lastGeneration = componentChain.ga.currentGeneration();
-			return componentChain.ga.globalBest;
+			lastGeneration = ga.currentGeneration();
+			return ga.globalBest;
 		}
 		else
 			return std::move(specimen);

@@ -8,40 +8,25 @@
 
 namespace GA
 {
-	ComponentChain::ComponentChain(
-		GeneticAlgorithm& ga,
-		std::vector<std::shared_ptr<Component>>::reverse_iterator current,
-		std::vector<std::shared_ptr<Component>>::reverse_iterator last)
-		:
-		ga(ga),
-		current(current),
-		last(last)
+	ComponentChainBuilder::ComponentChainBuilder(std::shared_ptr<Component> chain) :
+		chain(chain)
 	{ }
 
-	Specimen ComponentChain::get()
+	ComponentChainBuilder& ComponentChainBuilder::with(std::shared_ptr<Component> component)
 	{
-		ComponentChain newChain = *this;
-		newChain.current++;
+		component->chain = chain;
+		chain = component;
 
-		if (current == last)
-			throw "End of pipeline";
-
-		return (*current)->get(newChain);
+		return *this;
 	}
 
-	ComponentChain ComponentChain::skip(int by)
+	InlineComponent::InlineComponent(std::function<Specimen(GeneticAlgorithm& ga)> inlineFunction):
+		inlineFunction(inlineFunction)
+	{ }
+
+
+	Specimen InlineComponent::get(GeneticAlgorithm& ga)
 	{
-		ComponentChain newChain = *this;
-		newChain.current += by;
-		return newChain;
+		return inlineFunction(ga);
 	}
-
-	void Component::reset(GA::GeneticAlgorithm& ga)
-	{ }
-
-	void Component::prepare(GA::GeneticAlgorithm& ga)
-	{ }
-
-	void Component::log(GeneticAlgorithm& ga)
-	{ }
 }

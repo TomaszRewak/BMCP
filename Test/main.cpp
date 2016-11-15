@@ -4,7 +4,6 @@
 // ==== https://github.com/TomaszRewak ====
 // ========================================
 
-#include "GeneticAlgorithm/Builder.h"
 #include "BMCP_GA\InitialPopulation.h"
 #include "BMCP_GA\Mutation.h"
 #include "BMCP_GA\Crossing.h"
@@ -13,6 +12,9 @@
 #include "BMCP_GA\Tabu.h"
 #include "BMCP_GA\StopCondition.h"
 #include "BMCP_GA\Restore.h"
+#include "BMCP_GA\Drain.h"
+#include "BMCP_GA\Flow.h"
+#include "BMCP_GA\SimulatedAnnealing.h"
 #include "FitnessLog.hpp"
 
 #include <iostream>
@@ -23,36 +25,36 @@ int main()
 	std::srand(std::time(0));
 
 	std::string graphs[] = {
-		"GEOM120",
-		"GEOM120a",
-		"GEOM120b",
-
-		"GEOM100",
-		"GEOM100a",
-		"GEOM100b",
-
-		"GEOM90",
-		"GEOM90a",
-		"GEOM90b",
-
-		"GEOM80",
-		"GEOM80a",
-		"GEOM80b",
-
-		"GEOM70",
-		"GEOM70a",
-		"GEOM70b",
+		/*"GEOM40",
+		"GEOM40a",
+		"GEOM40b",*/
 
 		"GEOM60",
 		"GEOM60a",
 		"GEOM60b",
 
-		"GEOM40",
-		"GEOM40a",
-		"GEOM40b",
+		"GEOM70",
+		"GEOM70a",
+		"GEOM70b",
+
+		/*"GEOM80",
+		"GEOM80a",
+		"GEOM80b",
+
+		"GEOM90",
+		"GEOM90a",
+		"GEOM90b",
+
+		"GEOM100",
+		"GEOM100a",
+		"GEOM100b",
+
+		"GEOM120",
+		"GEOM120a",
+		"GEOM120b",*/
 	};
 
-	for (int iteration = 0; iteration < 10; iteration++)
+	for (int iteration = 0; iteration < 1; iteration++)
 		for (auto graphName : graphs)
 		{
 			std::string testCase = graphName + " " + std::to_string(iteration);
@@ -65,18 +67,21 @@ int main()
 			input >> graph;
 			input.close();
 
-			auto ga = GA::Builder::std()
-				.withInitialPopulation<BMCP_GA::InitialPopulation>(graph, 100)
-				.withStopCondition<BMCP_GA::TimeStopCondition>(2000)
-				.with<BMCP_GA::RingSelection>(0.1)
-				//.with<BMCP_GA::SingleSelection>()
-				.with<BMCP_GA::Mutation>(0.2)
-				//.with<BMCP_GA::Crossing>(graph, 0.2)
-				.with<BMCP_GA::Fitness>(graph)
-				//.with<BMCP_GA::Tabu>(20000000, tabu, 10, graph)
-				.with<BMCP_GA::RingMiddleSelection>(10)
-				.with<BMCP_GA::Restore>(100)
-				.with<FitnessLog>();
+			GA::GeneticAlgorithm ga;
+			FitnessLogScope logScope;
+
+			ga
+				.withInitialPopulation<BMCP_GA::InitialPopulation>(graph, 1)
+				.withStopCondition<BMCP_GA::TimeStopCondition>(300)
+				.with([&](GA::ComponentChainBuilder& builder) { builder
+					.with<BMCP_GA::SingleSelection>()
+					.with<BMCP_GA::Mutation>(0.2)
+					.with<BMCP_GA::Fitness>(graph)
+					.with<BMCP_GA::RingSelection>(10)
+					.with<BMCP_GA::SimulatesAnnealing>(10., 1000., 1.2)
+					.with<BMCP_GA::NewPopulation>()
+					.with<FitnessLog>(logScope); });
+
 			ga.start();
 
 			BMCP::Greedy greedy = BMCP::Greedy(graph);
@@ -92,7 +97,7 @@ int main()
 
 			{
 				std::ofstream output;
-				output.open("Out/fitness " + testCase + " " + std::to_string(coloring.colors) + ".out");
+				output.open("Out/fitness_global " + testCase + " " + std::to_string(coloring.colors) + ".out");
 				for (auto line : ga.logs["fitness_global"])
 					output << line << std::endl;
 				output.close();

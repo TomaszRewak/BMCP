@@ -53,17 +53,12 @@ namespace TabuSearch {
 
 	bool Tabu::isUnique(std::vector<int> &element)
 	{
-		attempts++;
-
 		int first = bufferedElements->at(1).next;
 
 		if (!first || isUnique(element, 0, first, 0))
 			return true;
 		else
-		{
-			failures++;
 			return false;
-		}
 	}
 
 	void Tabu::insert(std::vector<int> &element, long long generation)

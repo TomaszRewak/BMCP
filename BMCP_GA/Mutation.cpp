@@ -14,9 +14,9 @@ namespace BMCP_GA
 		probability(probability)
 	{ }
 
-	GA::Specimen Mutation::get(GA::ComponentChain componentChain)
+	GA::Specimen Mutation::get(GA::GeneticAlgorithm& ga)
 	{
-		GA::Specimen specimen = componentChain.get();
+		GA::Specimen specimen = chain->get(ga);
 		std::vector<int>& genotype = specimen.genotype;
 
 		do {
@@ -24,7 +24,7 @@ namespace BMCP_GA
 			int b = rand() % genotype.size();
 
 			std::swap(genotype[a], genotype[b]);
-		} while (distribution(generator) <= probability);
+		} while (random.uniform() <= probability);
 
 		return std::move(genotype);
 	}

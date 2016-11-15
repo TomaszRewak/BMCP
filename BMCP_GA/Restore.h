@@ -16,12 +16,11 @@ namespace BMCP_GA
 	{
 	private:
 		int afterGeneration;
-		int lastGeneration;
+		int lastGeneration = 0;
 
 	public:
 		Restore(int afterGeneration);
 
-		virtual void prepare(GA::GeneticAlgorithm& geneticAlgorithm);
-		virtual GA::Specimen get(GA::ComponentChain componentChain);
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};
 }

@@ -113,11 +113,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Crossing.cpp" />
+    <ClCompile Include="Drain.cpp" />
     <ClCompile Include="Fitness.cpp" />
+    <ClCompile Include="Flow.cpp" />
     <ClCompile Include="InitialPopulation.cpp" />
     <ClCompile Include="Mutation.cpp" />
     <ClCompile Include="Restore.cpp" />
     <ClCompile Include="Selection.cpp" />
+    <ClCompile Include="SimulatedAnnealing.cpp" />
     <ClCompile Include="StopCondition.cpp" />
     <ClCompile Include="Tabu.cpp" />
   </ItemGroup>
@@ -134,12 +137,16 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Crossing.h" />
+    <ClInclude Include="Drain.h" />
     <ClInclude Include="Fitness.h" />
+    <ClInclude Include="Flow.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Restore.h" />
+    <ClInclude Include="Selection.h" />
+    <ClInclude Include="SimulatedAnnealing.h" />
     <ClInclude Include="Tabu.h" />
     <ClInclude Include="InitialPopulation.h" />
     <ClInclude Include="Mutation.h" />
-    <ClInclude Include="Selection.h" />
     <ClInclude Include="StopCondition.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

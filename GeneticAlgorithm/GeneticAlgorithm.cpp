@@ -10,7 +10,6 @@
 
 #include "GeneticAlgorithm.h"
 #include "InitialPopulation.h"
-#include "Selection.h"
 #include "StopCondition.h"
 #include "Fitness.h"
 #include "Specimen.h"
@@ -30,34 +29,23 @@ namespace GA
 		for (auto stopCondition : stopConditions)
 			stopCondition->reset(*this);
 
-		for (auto component : components)
-			component->reset(*this);
-
 		while(true)
 		{
 			for (auto stopCondition : stopConditions)
 				if (stopCondition->checkCondition(*this))
 					return;
 
-			for (auto& component : components)
-				component->prepare(*this);
+			for (auto chainGenerator : chainGenerators)
+			{
+				ComponentChainBuilder builder;
+				chainGenerator(builder);
 
-			ComponentChain chain = ComponentChain(*this, components.rbegin(), components.rend());
-
-			std::vector<Specimen> newPopulation;
-			newPopulation.reserve(population.size());
-
-			while (newPopulation.size() < population.size())
-				newPopulation.push_back(std::move(chain.get()));
-
-			population = std::move(newPopulation);
+				builder.chain->get(*this);
+			}
 
 			for (auto& specimen : population)
-				if (specimen.fitness < globalBest.fitness)
+				if (specimen.fitness <= globalBest.fitness)
 					globalBest = specimen;
-
-			for (auto& component : components)
-				component->log(*this);
 
 			generation++;
 		}
@@ -75,25 +63,22 @@ namespace GA
 
 #pragma region Initialization
 
-	GeneticAlgorithm GeneticAlgorithm::withInitialPopulation(std::shared_ptr<InitialPopulation> initialPopulation)
+	GeneticAlgorithm& GeneticAlgorithm::withInitialPopulation(std::shared_ptr<InitialPopulation> initialPopulation)
 	{
-		auto newBuilder = *this;
-		newBuilder.initialPopulation = initialPopulation;
-		return newBuilder;
+		this->initialPopulation = initialPopulation;
+		return *this;
 	}
 
-	GeneticAlgorithm GeneticAlgorithm::withStopCondition(std::shared_ptr<StopCondition> stopCondition)
+	GeneticAlgorithm& GeneticAlgorithm::withStopCondition(std::shared_ptr<StopCondition> stopCondition)
 	{
-		auto newBuilder = *this;
-		newBuilder.stopConditions.push_back(stopCondition);
-		return newBuilder;
+		stopConditions.push_back(stopCondition);
+		return *this;
 	}
 
-	GeneticAlgorithm GeneticAlgorithm::with(std::shared_ptr<Component> component)
+	GeneticAlgorithm& GeneticAlgorithm::with(std::function<void(ComponentChainBuilder& builder)> chain)
 	{
-		auto newBuilder = *this;
-		newBuilder.components.push_back(component);
-		return newBuilder;
+		chainGenerators.push_back(chain);
+		return *this;
 	}
 
 #pragma endregion

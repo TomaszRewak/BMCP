@@ -21,13 +21,26 @@ namespace BMCP_GA
 		slots = graph.slots;
 	}
 
-	GA::Specimen Tabu::get(GA::ComponentChain componentChain)
+	GA::Specimen Tabu::get(GA::GeneticAlgorithm& ga)
 	{
 		generation++;
 
+		if (totalAttempts > denialBandwidth)
+		{
+			if (((double)totalFailures / (double)totalAttempts) > targetDenial)
+				tabu.maxDiff = tabu.maxDiff * 0.7;
+			else
+				tabu.maxDiff += std::max(1., tabu.maxDiff * 0.3);
+
+			totalFailures = totalFailures * denialBandwidth / totalAttempts * 0.3;
+			totalAttempts = denialBandwidth * 0.3;
+		}
+
+		totalAttempts++;
+
 		for (int i = 0; i < attempts; i++)
 		{
-			GA::Specimen specimen = componentChain.get();
+			GA::Specimen specimen = chain->get(ga);
 			std::vector<int>& genotype = specimen.genotype;
 
 			auto coloring = greedy.findColoring(genotype);
@@ -46,35 +59,12 @@ namespace BMCP_GA
 				tabu.insert(fingerprint, generation);
 				return std::move(specimen);
 			}
+
+			totalFailures++;
 		}
 
-		GA::Specimen specimen = componentChain.get();
+		GA::Specimen specimen = chain->get(ga);
 		specimen.fitness = greedy.rate(specimen.genotype);
 		return std::move(specimen);
-	}
-
-	void Tabu::prepare(GA::GeneticAlgorithm& ga)
-	{
-		tabu.failures = 0;
-		tabu.attempts = 0;
-
-		if (totalAttempts > denialBandwidth)
-		{
-			if (((double)totalFailures / (double)totalAttempts) > targetDenial)
-				tabu.maxDiff = tabu.maxDiff * 0.7;
-			else
-				tabu.maxDiff += std::max(1., tabu.maxDiff * 0.3);
-
-			totalFailures = totalFailures * denialBandwidth / totalAttempts * 0.3;
-			totalAttempts = denialBandwidth * 0.3;
-		}
-	}
-
-	void Tabu::log(GA::GeneticAlgorithm& ga)
-	{
-		totalFailures += tabu.failures;
-		totalAttempts += ga.population.size();
-
-		ga.logs["tabu"].push_back(std::to_string(ga.currentGeneration()) + "\t" + std::to_string((double)totalFailures / (double)totalAttempts));
 	}
 }

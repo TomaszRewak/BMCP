@@ -12,9 +12,9 @@ namespace BMCP_GA
 		greedy(BMCP::Greedy(graph))
 	{ }
 
-	GA::Specimen Fitness::get(GA::ComponentChain componentChain)
+	GA::Specimen Fitness::get(GA::GeneticAlgorithm& ga)
 	{
-		auto specimen = componentChain.get();
+		auto specimen = chain->get(ga);
 
 		specimen.fitness = greedy.rate(specimen.genotype);
 

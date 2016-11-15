@@ -8,51 +8,40 @@
 
 namespace BMCP_GA
 {
-	RingSelection::RingSelection(double ringSize) :
+	RingSelection::RingSelection(int ringSize) :
 		ringSize(ringSize)
 	{ }
 
-	GA::Specimen RingSelection::get(GA::ComponentChain componentChain)
+	GA::Specimen RingSelection::get(GA::GeneticAlgorithm& ga)
 	{
-		auto& population = componentChain.ga.population;
+		GA::Specimen bestSpecimen;
 
-		GA::Specimen* bestSpecimen = &population[rand() % population.size()];
-
-		for (int i = ringSize * population.size(); i >= 0; i--) 
+		for (int i = 0; i < ringSize; i++) 
 		{
-			GA::Specimen* specimen = &population[rand() % population.size()];
-
-			if (specimen->fitness < bestSpecimen->fitness)
-				bestSpecimen = specimen;
-		}
-		return *bestSpecimen;
-	}
-
-	RingMiddleSelection::RingMiddleSelection(int ringSize) :
-		ringSize(ringSize)
-	{ }
-
-	GA::Specimen RingMiddleSelection::get(GA::ComponentChain componentChain)
-	{
-		GA::Specimen bestSpecimen = componentChain.get();
-
-		for (int i = ringSize; i >= 0; i--)
-		{
-			GA::Specimen specimen = componentChain.get();
+			GA::Specimen specimen = chain ? chain->get(ga) : ga.population[random.range(ga.population.size())];
 
 			if (specimen.fitness < bestSpecimen.fitness)
-				bestSpecimen = std::move(specimen);
+				bestSpecimen = specimen;
 		}
 		return std::move(bestSpecimen);
 	}
 
-	SingleSelection::SingleSelection()
-	{ }
-
-	GA::Specimen SingleSelection::get(GA::ComponentChain componentChain)
+	GA::Specimen SingleSelection::get(GA::GeneticAlgorithm& ga)
 	{
-		auto& population = componentChain.ga.population;
+		return chain ? chain->get(ga) : ga.population[random.range(ga.population.size())];
+	}
 
-		return population[rand() % population.size()];
+	GA::Specimen BestSelection::get(GA::GeneticAlgorithm& ga)
+	{
+		if (chain)
+			return chain->get(ga);
+
+		int best = 0;
+
+		for (int i = 0; i < ga.population.size(); i++)
+			if (ga.population[i].fitness < ga.population[best].fitness)
+				best = i;
+
+		return ga.population[best];
 	}
 }
