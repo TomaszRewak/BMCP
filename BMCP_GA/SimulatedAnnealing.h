@@ -5,7 +5,7 @@
 
 namespace BMCP_GA
 {
-	class SimulatesAnnealing : public GA::Component
+	class SimulatedAnnealing : public GA::Component
 	{
 	private:
 		double initialTemperature;
@@ -15,7 +15,7 @@ namespace BMCP_GA
 		Random random;
 
 	public:
-		SimulatesAnnealing(double initialTemperature, double coolingRation, double baseShape);
+		SimulatedAnnealing(double initialTemperature, double coolingRation, double baseShape);
 
 		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};

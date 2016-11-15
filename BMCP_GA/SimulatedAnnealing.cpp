@@ -5,13 +5,13 @@
 
 namespace BMCP_GA
 {
-	SimulatesAnnealing::SimulatesAnnealing(double initialTemperature, double coolingRation, double baseShape) :
+	SimulatedAnnealing::SimulatedAnnealing(double initialTemperature, double coolingRation, double baseShape) :
 		initialTemperature(initialTemperature),
 		coolingRation(coolingRation),
 		baseShape(baseShape)
 	{ }
 
-	GA::Specimen SimulatesAnnealing::get(GA::GeneticAlgorithm& ga)
+	GA::Specimen SimulatedAnnealing::get(GA::GeneticAlgorithm& ga)
 	{
 		double temperature = initialTemperature * pow(baseShape, -(double)ga.currentGeneration() / coolingRation);
 

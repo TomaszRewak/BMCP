@@ -78,7 +78,7 @@ int main()
 					.with<BMCP_GA::Mutation>(0.2)
 					.with<BMCP_GA::Fitness>(graph)
 					.with<BMCP_GA::RingSelection>(10)
-					.with<BMCP_GA::SimulatesAnnealing>(10., 1000., 1.2)
+					.with<BMCP_GA::SimulatedAnnealing>(10., 1000., 1.2)
 					.with<BMCP_GA::NewPopulation>()
 					.with<FitnessLog>(logScope); });
 
