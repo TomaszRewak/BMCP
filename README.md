@@ -9,15 +9,17 @@ It consists of separate modules:
 Abstract genetic algorithm, that can be also used for sloving any other problem due to its modular structure.
 Here is an example of initializing and running created GA:
 ```
-auto ga = GA::Builder::std()
-    .withInitialPopulation<BMCP_GA::InitialPopulation>(graph, 100)
-    .withStopCondition<BMCP_GA::TimeStopCondition>(2000)
-    .with<BMCP_GA::RingSelection>(0.1)
-    .with<BMCP_GA::Mutation>(0.2)
-    .with<BMCP_GA::Crossing>(graph, 0.2)
-    .with<BMCP_GA::Fitness>(graph)
-    .with<BMCP_GA::Restore>(100)
-    .with<FitnessLog>();
+GA::GeneticAlgorithm ga;
+ga
+	.withInitialPopulation<BMCP_GA::InitialPopulation>(graph, 1)
+	.withStopCondition<BMCP_GA::TimeStopCondition>(300)
+	.with([&](GA::ComponentChainBuilder& builder) { builder
+	    .with<BMCP_GA::SingleSelection>()
+    	.with<BMCP_GA::Mutation>(0.2)
+    	.with<BMCP_GA::Fitness>(graph)
+    	.with<BMCP_GA::RingSelection>(10)
+    	.with<BMCP_GA::SimulatesAnnealing>(10., 1000., 1.2)
+    	.with<BMCP_GA::NewPopulation>(); });
 ga.start();
 ```
 New components can be created be inheriting ```Component``` class. Components are used in a pipeline to transform one population into another.
