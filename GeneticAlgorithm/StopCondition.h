@@ -13,7 +13,6 @@ namespace GA
 	class StopCondition
 	{
 	public:
-		virtual void reset(GeneticAlgorithm& geneticAlgorithm);
 		virtual bool checkCondition(GeneticAlgorithm& geneticAlgorithm) = 0;
 	};
 }

@@ -122,7 +122,6 @@
     <ClCompile Include="Component.h" />
     <ClCompile Include="Specimen.cpp" />
     <ClCompile Include="Specimen.h" />
-    <ClCompile Include="StopCondition.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

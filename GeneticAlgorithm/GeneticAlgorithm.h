@@ -8,6 +8,7 @@
 
 #include <map>
 #include <functional>
+#include <chrono>
 
 #include "Component.h"
 #include "Specimen.h"
@@ -29,6 +30,8 @@ namespace GA
 	public:
 		std::vector<Specimen> population;
 		Specimen globalBest;
+
+		std::chrono::steady_clock::time_point startTime;
 
 		void start();
 		int currentGeneration();

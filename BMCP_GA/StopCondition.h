@@ -29,12 +29,10 @@ namespace BMCP_GA
 	{
 	private:
 		int maxTime;
-		std::chrono::steady_clock::time_point start;
 
 	public:
 		TimeStopCondition(int maxTime);
 
-		virtual void reset(GA::GeneticAlgorithm& geneticAlgorithm) override;
 		virtual bool checkCondition(GA::GeneticAlgorithm& geneticAlgorithm) override;
 	};
 
@@ -49,12 +47,9 @@ namespace BMCP_GA
 
 		int tailLength;
 
-		std::chrono::steady_clock::time_point start;
-
 	public:
 		LongTailStopCondition(int minTime, double tailFactor);
 
-		virtual void reset(GA::GeneticAlgorithm& geneticAlgorithm) override;
 		virtual bool checkCondition(GA::GeneticAlgorithm& geneticAlgorithm) override;
 	};
 }

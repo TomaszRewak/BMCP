@@ -14,4 +14,15 @@ namespace BMCP_GA
 	{
 		GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};
+
+	class ResizedPopulation : public GA::Component
+	{
+	private:
+		int newSize;
+
+	public:
+		ResizedPopulation(int newSize);
+
+		GA::Specimen get(GA::GeneticAlgorithm& ga) override;
+	};
 }

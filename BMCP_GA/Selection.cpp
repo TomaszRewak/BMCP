@@ -38,7 +38,7 @@ namespace BMCP_GA
 
 		int best = 0;
 
-		for (int i = 0; i < ga.population.size(); i++)
+		for (int i = 1; i < ga.population.size(); i++)
 			if (ga.population[i].fitness < ga.population[best].fitness)
 				best = i;
 

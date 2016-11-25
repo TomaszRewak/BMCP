@@ -24,42 +24,32 @@ namespace BMCP_GA
 		maxTime(maxTime)
 	{ }
 
-	void TimeStopCondition::reset(GA::GeneticAlgorithm& geneticAlgorithm)
+	bool TimeStopCondition::checkCondition(GA::GeneticAlgorithm& ga)
 	{
-		start = std::chrono::steady_clock::now();
-	}
-
-	bool TimeStopCondition::checkCondition(GA::GeneticAlgorithm& geneticAlgorithm)
-	{
-		return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - start).count() > maxTime;
+		return std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - ga.startTime).count() > maxTime;
 	}
 
 	LongTailStopCondition::LongTailStopCondition(int maxTime, double tailFactor) :
 		maxTime(maxTime),
 		tailFactor(tailFactor)
-	{ }
-
-	void LongTailStopCondition::reset(GA::GeneticAlgorithm& geneticAlgorithm)
 	{
 		prevBest = INT_MAX;
 		prevBestGeneration = 0;
 		tailLength = 1;
-
-		start = std::chrono::steady_clock::now();
 	}
 
-	bool LongTailStopCondition::checkCondition(GA::GeneticAlgorithm& geneticAlgorithm)
+	bool LongTailStopCondition::checkCondition(GA::GeneticAlgorithm& ga)
 	{
-		if (geneticAlgorithm.globalBest.fitness < prevBest)
+		if (ga.globalBest.fitness < prevBest)
 		{
-			prevBest = geneticAlgorithm.globalBest.fitness;
-			tailLength = std::max(tailLength, (int)(tailFactor * (geneticAlgorithm.currentGeneration() - prevBestGeneration)));
-			prevBestGeneration = geneticAlgorithm.currentGeneration();
+			prevBest = ga.globalBest.fitness;
+			tailLength = std::max(tailLength, (int)(tailFactor * (ga.currentGeneration() - prevBestGeneration)));
+			prevBestGeneration = ga.currentGeneration();
 		}
 
 		return
-			std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - start).count() > maxTime
+			std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - ga.startTime).count() > maxTime
 			&&
-			geneticAlgorithm.currentGeneration() > prevBestGeneration + tailLength;
+			ga.currentGeneration() > prevBestGeneration + tailLength;
 	}
 }

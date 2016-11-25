@@ -37,8 +37,5 @@
     <ClCompile Include="Specimen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="StopCondition.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

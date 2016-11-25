@@ -45,15 +45,19 @@ public:
 
 		int time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::steady_clock::now() - logScope.start).count();
 
-		std::string log = std::to_string(ga.currentGeneration()) + "\t" + std::to_string(time) + "\t" + std::to_string(minValue);// + "\t" + std::to_string(avgValue) + "\t" + std::to_string(maxValue);
+		if (logScope.globalmin == INT_MAX)
+			logScope.globalmin = minValue + 5;
 
-		if (minValue < logScope.globalmin)
+		while (minValue < logScope.globalmin)
 		{
-			ga.addLog("fitness_global", log);
-			logScope.globalmin = minValue;
+			logScope.globalmin--;
 
-			std::cout << log << std::endl;
+			std::string globalMinLog = std::to_string(ga.currentGeneration()) + "\t" + std::to_string(time) + "\t" + std::to_string(logScope.globalmin);
+			ga.addLog("fitness_global", globalMinLog);
+			std::cout << globalMinLog << std::endl;
 		}
+
+		//std::string log = std::to_string(ga.currentGeneration()) + "\t" + std::to_string(time) + "\t" + std::to_string(minValue) + "\t" + std::to_string(avgValue) + "\t" + std::to_string(maxValue);
 		//ga.addLog("fitness", log);
 
 		if (chain)

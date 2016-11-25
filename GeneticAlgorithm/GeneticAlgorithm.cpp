@@ -19,15 +19,14 @@ namespace GA
 {
 	void GeneticAlgorithm::start()
 	{
+		startTime = std::chrono::steady_clock::now();
+
 		for (auto spec : initialPopulation->generate())
 			population.push_back(std::move(spec));
 
 		for (auto& specimen : population)
 			if (specimen.fitness < globalBest.fitness)
 				globalBest = specimen;
-
-		for (auto stopCondition : stopConditions)
-			stopCondition->reset(*this);
 
 		while(true)
 		{
