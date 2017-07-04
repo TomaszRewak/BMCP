@@ -22,7 +22,7 @@ ga
     	.with<BMCP_GA::NewPopulation>(); });
 ga.start();
 ```
-New components can be created be inheriting ```Component``` class. Components are used in a pipeline to transform one population into another.
+New components can be created by inheriting ```Component``` class. Components are used in a pipeline to transform one population into another.
 
 # BMCP
 The main component here is ```Greedy``` class that enables user to compute a coloring based on a graph definition and a vector containing an order of colors assigning. 
