@@ -5,6 +5,7 @@
 // ========================================
 
 #include <algorithm>
+#include <climits>
 
 #include "Tabu.h"
 

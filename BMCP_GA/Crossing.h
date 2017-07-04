@@ -7,8 +7,8 @@
 #pragma once
 
 #include "Random.h"
-#include "GeneticAlgorithm\Component.h"
-#include "BMCP\Graph.h"
+#include "../GeneticAlgorithm/Component.h"
+#include "../BMCP/Graph.h"
 
 namespace BMCP_GA
 {

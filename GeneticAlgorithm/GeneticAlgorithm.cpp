@@ -25,7 +25,7 @@ namespace GA
 			population.push_back(std::move(spec));
 
 		for (auto& specimen : population)
-			if (specimen.fitness < globalBest.fitness)
+			if (specimen.fitness <= globalBest.fitness)
 				globalBest = specimen;
 
 		while(true)

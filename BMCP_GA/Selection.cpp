@@ -44,4 +44,34 @@ namespace BMCP_GA
 
 		return ga.population[best];
 	}
+
+	GA::Specimen BetterSelection::get(GA::GeneticAlgorithm& ga)
+	{
+		while (true)
+		{
+			GA::Specimen specimen = chain ? chain->get(ga) : ga.population[random.range(ga.population.size())];
+
+			if (specimen.fitness <= ga.globalBest.fitness)
+				return std::move(specimen);
+		}
+	}
+
+	NewSelection::NewSelection(BMCP::Graph& graph)
+	{
+		baseGenotype.reserve(graph.slots);
+
+		for (size_t i = 0; i < graph.nodes.size(); i++)
+			for (size_t j = 0; j < graph.nodes[i].weight; j++)
+				baseGenotype.push_back(i);
+	}
+
+	GA::Specimen NewSelection::get(GA::GeneticAlgorithm& ga)
+	{
+		GA::Specimen specimen;
+		specimen.genotype = baseGenotype;
+
+		std::random_shuffle(specimen.genotype.begin(), specimen.genotype.end());
+
+		return specimen;
+	}
 }

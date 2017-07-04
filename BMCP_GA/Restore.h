@@ -8,7 +8,7 @@
 
 #include <random>
 
-#include "GeneticAlgorithm\Component.h"
+#include "../GeneticAlgorithm/Component.h"
 
 namespace BMCP_GA
 {

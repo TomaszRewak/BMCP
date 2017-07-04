@@ -9,8 +9,8 @@
 #include <ctime>
 #include <chrono>
 
-#include "GeneticAlgorithm\GeneticAlgorithm.h"
-#include "GeneticAlgorithm\StopCondition.h"
+#include "../GeneticAlgorithm/GeneticAlgorithm.h"
+#include "../GeneticAlgorithm/StopCondition.h"
 
 namespace BMCP_GA
 {

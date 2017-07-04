@@ -2,7 +2,8 @@
 
 #include <vector>
 
-#include "GeneticAlgorithm\GeneticAlgorithm.h"
+#include "../GeneticAlgorithm/GeneticAlgorithm.h"
+#include "Random.h"
 
 namespace BMCP_GA
 {
@@ -40,6 +41,18 @@ namespace BMCP_GA
 
 	public:
 		StoreAndForward(std::function<void(GA::ComponentChainBuilder&)> buildingFunction);
+
+		GA::Specimen get(GA::GeneticAlgorithm& ga) override;
+	};
+
+	class OneOf : public GA::Component
+	{
+	private:
+		std::vector<std::function<void(GA::ComponentChainBuilder&)>> buildingFunctions;
+		Random random;
+
+	public:
+		OneOf(std::vector<std::function<void(GA::ComponentChainBuilder&)>> buildingFunctions);
 
 		GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};

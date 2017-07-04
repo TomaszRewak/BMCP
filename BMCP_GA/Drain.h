@@ -1,7 +1,7 @@
 #pragma once
 
-#include "GeneticAlgorithm/Component.h"
-#include "GeneticAlgorithm/GeneticAlgorithm.h"
+#include "../GeneticAlgorithm/Component.h"
+#include "../GeneticAlgorithm/GeneticAlgorithm.h"
 
 namespace BMCP_GA
 {
@@ -22,6 +22,18 @@ namespace BMCP_GA
 
 	public:
 		ResizedPopulation(int newSize);
+
+		GA::Specimen get(GA::GeneticAlgorithm& ga) override;
+	};
+
+	class MapPopulation : public GA::Component
+	{
+	private:
+		int maxDiff;
+		std::function<void(GA::ComponentChainBuilder&)> mappingFunction;
+
+	public:
+		MapPopulation(std::function<void(GA::ComponentChainBuilder&)> mappingFunction, int maxDiff);
 
 		GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};

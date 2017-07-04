@@ -10,3 +10,6 @@ BMCP/Debug/
 BMCP_GA/Debug/
 /ipch/AutoPCH
 /Out
+/.vs
+/Tabu/Debug
+*.vcxproj.user

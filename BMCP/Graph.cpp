@@ -4,8 +4,6 @@
 // ==== https://github.com/TomaszRewak ====
 // ========================================
 
-#pragma once
-
 #include "Graph.h"
 
 namespace BMCP

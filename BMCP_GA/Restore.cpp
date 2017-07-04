@@ -5,7 +5,7 @@
 // ========================================
 
 #include "Restore.h"
-#include "GeneticAlgorithm\GeneticAlgorithm.h"
+#include "../GeneticAlgorithm/GeneticAlgorithm.h"
 
 namespace BMCP_GA
 {

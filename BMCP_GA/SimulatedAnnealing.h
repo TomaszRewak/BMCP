@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Random.h"
-#include "GeneticAlgorithm\GeneticAlgorithm.h"
+#include "../GeneticAlgorithm/GeneticAlgorithm.h"
 
 namespace BMCP_GA
 {
@@ -48,13 +48,28 @@ namespace BMCP_GA
 	private:
 		TimedSimulatedAnnealingContext& context;
 
-		double initialTemperature;
 		double timeOf01;
 
 		Random random;
 
 	public:
-		TimedSimulatedAnnealingWithContext(TimedSimulatedAnnealingContext& context, double initialTemperature, double timeOf01);
+		TimedSimulatedAnnealingWithContext(TimedSimulatedAnnealingContext& context, double timeOf01);
+
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
+	};
+
+	class TimedSimulatedAnnealingWithContextAndMinimal : public GA::Component
+	{
+	private:
+		TimedSimulatedAnnealingContext& context;
+
+		double timeOf01;
+		int minimal;
+
+		Random random;
+
+	public:
+		TimedSimulatedAnnealingWithContextAndMinimal(TimedSimulatedAnnealingContext& context, double timeOf01, int minimal);
 
 		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};

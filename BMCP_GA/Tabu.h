@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include "BMCP\Greedy.h"
-#include "Tabu\Tabu.h"
-#include "GeneticAlgorithm\GeneticAlgorithm.h"
+#include "../BMCP/Greedy.h"
+#include "../Tabu/Tabu.h"
+#include "../GeneticAlgorithm/GeneticAlgorithm.h"
 
 namespace BMCP_GA
 {

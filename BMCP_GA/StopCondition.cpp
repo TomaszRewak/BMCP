@@ -5,9 +5,10 @@
 // ========================================
 
 #include <algorithm>
+#include <climits>
 
 #include "StopCondition.h"
-#include "GeneticAlgorithm\GeneticAlgorithm.h"
+#include "../GeneticAlgorithm/GeneticAlgorithm.h"
 
 namespace BMCP_GA
 {

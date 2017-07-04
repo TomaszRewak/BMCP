@@ -6,16 +6,20 @@
 
 #include "Greedy.h"
 
+#include <cstring>
+
 namespace BMCP
 {
-	Greedy::GreedyNode::GreedyNode() {
+	Greedy::GreedyNode::GreedyNode() :
+		ranges(1000)
+	{
 		reset();
 	}
 
 	int Greedy::GreedyNode::nextColor() {
 		while (totalStep != 0) {
 			color++;
-			totalStep += ranges[color].count;
+			totalStep += ranges[color];
 		}
 
 		return color;
@@ -29,16 +33,16 @@ namespace BMCP
 		}
 		else {
 			if (position >= ranges.size())
-				ranges.resize(position + 2, RangeEnd());
+				ranges.resize(position + 200);
 
-			ranges[position].count += step;
+			ranges[position] += step;
 
 			size = std::max(size, position + 1);
 		}
 	}
 
 	void Greedy::GreedyNode::reset() {
-		std::fill(ranges.begin(), ranges.begin() + size, RangeEnd());
+		std::memset(&ranges[0], 0, size * sizeof ranges[0]);
 
 		totalStep = 0;
 		done = 0;

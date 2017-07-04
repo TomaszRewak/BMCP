@@ -16,13 +16,8 @@ namespace BMCP
 {
 	class Greedy {
 	protected:
-		struct RangeEnd {
-			int count = 0;
-			int supportedBy = 0;
-		};
-
 		struct GreedyNode {
-			std::vector<RangeEnd> ranges;
+			std::vector<int> ranges;
 			int totalStep = 0;
 			int	done = 0;
 			int color = 0;

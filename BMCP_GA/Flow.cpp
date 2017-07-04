@@ -1,5 +1,3 @@
-#pragma once
-
 #include "Flow.h"
 
 namespace BMCP_GA
@@ -74,6 +72,20 @@ namespace BMCP_GA
 		});
 
 		GA::ComponentChainBuilder builder(inlineComponent);
+		buildingFunction(builder);
+
+		return builder.chain->get(ga);
+	}
+
+	OneOf::OneOf(std::vector<std::function<void(GA::ComponentChainBuilder&)>> buildingFunctions) :
+		buildingFunctions(buildingFunctions)
+	{ }
+
+	GA::Specimen OneOf::get(GA::GeneticAlgorithm& ga)
+	{
+		auto& buildingFunction = buildingFunctions[random.range(buildingFunctions.size())];
+
+		GA::ComponentChainBuilder builder(chain);
 		buildingFunction(builder);
 
 		return builder.chain->get(ga);

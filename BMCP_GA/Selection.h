@@ -7,8 +7,9 @@
 #pragma once
 
 #include "Random.h"
-#include "GeneticAlgorithm/GeneticAlgorithm.h"
-#include "GeneticAlgorithm/Component.h"
+#include "../GeneticAlgorithm/GeneticAlgorithm.h"
+#include "../GeneticAlgorithm/Component.h"
+#include "../BMCP/Greedy.h"
 
 namespace BMCP_GA
 {
@@ -37,6 +38,26 @@ namespace BMCP_GA
 	class BestSelection : public GA::Component
 	{
 	public:
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
+	};
+
+	class BetterSelection : public GA::Component
+	{
+	private:
+		Random random;
+
+	public:
+		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
+	};
+
+	class NewSelection : public GA::Component
+	{
+	private:
+		std::vector<int> baseGenotype;
+
+	public:
+		NewSelection(BMCP::Graph& greedy);
+
 		virtual GA::Specimen get(GA::GeneticAlgorithm& ga) override;
 	};
 }

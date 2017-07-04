@@ -6,9 +6,9 @@
 
 #pragma once
 
-#include "GeneticAlgorithm\InitialPopulation.h"
-#include "BMCP\Graph.h"
-#include "BMCP\Greedy.h"
+#include "../GeneticAlgorithm/InitialPopulation.h"
+#include "../BMCP/Graph.h"
+#include "../BMCP/Greedy.h"
 
 namespace BMCP_GA
 {
@@ -24,6 +24,20 @@ namespace BMCP_GA
 
 	public:
 		InitialPopulation(BMCP::Graph& graph, size_t size);
+
+		virtual std::vector<GA::Specimen> generate() override;
+	};
+
+	class InitialPopulationWithoutRating : public GA::InitialPopulation
+	{
+	private:
+		size_t genotypeLenght;
+		size_t size;
+
+		std::vector<int> genotypeStructure;
+
+	public:
+		InitialPopulationWithoutRating(BMCP::Graph& graph, size_t size);
 
 		virtual std::vector<GA::Specimen> generate() override;
 	};

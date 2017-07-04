@@ -4,6 +4,8 @@
 // ==== https://github.com/TomaszRewak ====
 // ========================================
 
+#include <climits>
+
 #include "Specimen.h"
 
 namespace GA
