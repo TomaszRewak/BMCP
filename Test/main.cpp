@@ -181,6 +181,12 @@ int main(int argc, char* argv[])
 		testCase(2000, 3, std::make_shared<newAlgorithm>()), // 9
 	};
 
+	if (argc < 2) 
+	{
+		std::cout << "Test number not provided" << std::endl;
+		return 1;
+	}
+
 	int testNumber = std::stoi(argv[1]);
 	testCase test = testCases[testNumber];
 
